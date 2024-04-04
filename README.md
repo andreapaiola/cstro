@@ -1,2 +1,0 @@
-# cstro
-ASTRO CMS
