@@ -1,0 +1,10 @@
+html,body{
+    background: #ccc;
+}
+
+.wrapper{
+    --content-max-width-big: 1440;
+    --content-max-width-small: 375;
+    --font-size-big: 18;
+    --font-size-small: 14;
+}

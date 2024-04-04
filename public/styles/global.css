@@ -1,0 +1,178 @@
+*,*::before,*::after{
+    box-sizing: border-box;
+
+    /* controversial, but useful */
+    min-height: 0;
+    min-width: 0;
+}
+
+html{
+    hanging-puntuation: first last;
+}
+
+body{
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* eventually reset harder */
+/*
+html{
+    color-scheme: dark light;
+}
+*{
+    margin: 0;
+    padding: 0;
+    border: none;
+    font: inherit;
+}
+*/
+
+img,picture,svg,video,iframe,embed,canvas{
+    font-style: italic;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-size: cover;
+    shape-margin: .75rem;
+}
+
+
+video{
+    aspect-ratio: 16 / 9 auto;
+}
+
+h1,h2,h3,h4,h5,h6{
+    max-width: 75ch;
+    text-wrap: balance;
+}
+
+p{
+    max-width: 75ch;
+    text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: no-preferece){
+    :has(:target){
+        scroll-behaviour: smooth;
+        scroll-padding-top: 2rem;
+    }
+}
+
+
+.wrapper{
+    --content-max-width-big: 1440;
+    --content-max-width-small: 375;
+    --font-size-big: 24;
+    --font-size-small: 16;
+
+    --px-in-rem: 16;
+
+    --padding-inline: 5rem;
+
+    width: min( calc( var(--content-max-width-big) * 1px ), 100% - (var(--padding-inline) / 2));
+    margin-inline:  auto;
+
+    /* fluid font with clamp calculator */
+    --font-size-fluid-factor: calc( (var(--font-size-big) - var(--font-size-small)) / (var(--content-max-width-big) - var(--content-max-width-small)) );
+    --font-size-min: calc( (var(--font-size-small) / var(--px-in-rem)) * 1rem );
+    --font-size-preferred: calc( (var(--font-size-fluid-factor) * 100cqw) + ((var(--font-size-small) - (var(--font-size-fluid-factor) * var(--content-max-width-small))) / var(--px-in-rem) * 1rem) );
+    --font-size-max: calc( (var(--font-size-big) / var(--px-in-rem) ) * 1rem );
+    font-size: clamp( var(--font-size-min), var(--font-size-preferred), var(--font-size-max) );
+
+}
+
+/* sidebar */
+.with-sidebar {
+    --main-min-width: 50ch;
+    --sidebar-size: 10ch;
+    --gap: 2rem;
+  
+    display: flex;
+    gap: var(--gap);
+    flex-wrap: wrap;
+  }
+  
+  .with-sidebar > * {
+    flex-grow: 1;
+  }
+  
+  .with-sidebar > :first-child {
+    flex-grow: 999;
+    flex-basis: calc(
+      ((var(--main-min-width) - (100% - var(--sidebar-size) - var(--gap))) * 9999)
+    );
+  }
+  
+  .with-sidebar > :last-child {
+    flex-basis: var(--sidebar-size);
+  }
+  
+/* columns */
+.columns {
+    
+    --min-column-size: 10rem;
+    --column-count: 3;
+    --gap: 2rem;
+    
+    --breakpoint: calc(var(--min-column-size) * var(--column-count) + (var(--gap) * (var(--column-count) - 1)) );
+    --column-size: calc((100% / var(--column-count)) - var(--gap));
+    
+    display: grid;
+    gap: var(--gap);
+    
+    grid-template-columns: repeat(
+      auto-fit, 
+      minmax(
+        min(max(var(--column-size), (100% - var(--breakpoint)) * -999 ), 100%), 
+        1fr)
+      );
+  }
+  
+/* grid flow with breakouts, also fullwidth */
+.content-grid {
+    --padding-inline: 1rem;
+    --content-max-width: 600px;
+    --breakout-max-width: 900px;
+  
+    --breakout-size: calc(
+      (var(--breakout-max-width) - var(--content-max-width-big)) / 2
+    );
+  
+    display: grid;
+    grid-template-columns:
+      [full-width-start] minmax(var(--padding-inline), 1fr)
+      [breakout-start] minmax(0, var(--breakout-size))
+      [content-start] min(
+        100% - (var(--padding-inline) * 2),
+        var(--content-max-width-big)
+      )
+      [content-end]
+      minmax(0, var(--breakout-size)) [breakout-end]
+      minmax(var(--padding-inline), 1fr) [full-width-end];
+  }
+  
+  .content-grid > :not(.breakout, .full-width),
+  .full-width > :not(.breakout, .full-width) {
+    grid-column: content;
+  }
+  
+  .content-grid > .breakout {
+    grid-column: breakout;
+  }
+  
+  .content-grid > .full-width {
+    grid-column: full-width;
+  
+    display: grid;
+    grid-template-columns: inherit;
+  }
+  
+  img.full-width {
+    width: 100%;
+    max-height: 45vh;
+    object-fit: cover;
+  }
+  

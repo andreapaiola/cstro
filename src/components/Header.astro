@@ -1,0 +1,17 @@
+---
+import { db, eq, Config, Content } from 'astro:db';
+
+const config = await db.select().from(Config);
+const site = config[0];
+const contents = await db.select().from(Content).where(eq(Content.published, true));
+
+---
+
+<header>
+    Header <a href="/">Logo {site.name}</a>
+    <menu>
+        {contents.map((item) => (
+            <a href={'/'+(item.alias === '/' ? '' : item.alias)} class={'item-link'+(item.alias === Astro.url.pathname ? '-actual' : '')}>{item.title}</a>
+        ))}
+    </menu>
+</header>

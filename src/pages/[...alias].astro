@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { db, eq, Config, Content } from 'astro:db';
+
+const config = await db.select().from(Config);
+const site = config[0];
+
+export async function getStaticPaths() {
+  const contents = await db.select().from(Content).where(eq(Content.published, true));
+  return contents.map(({ alias, title, body }) => {
+    return {
+      params: { alias },
+      props: { title, body },
+    };
+  });
+}
+
+const { title, body } = Astro.props;
+
+---
+{
+	<Layout title={title + ' | ' + site.name }>
+    <Header></Header>
+		<main set:html={body}></main>
+    <Footer></Footer>
+	</Layout>
+}
+
+<link rel="stylesheet" href="/styles/global.css" />
+<link rel="stylesheet" href="/styles/frontend.css" />

@@ -1,0 +1,44 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { db, eq, Config, Author, Content } from 'astro:db';
+
+const config = await db.select().from(Config);
+const site = config[0];
+
+const contents = await db.select().from(Content).innerJoin(Author, eq(Author.id, Content.authorId));
+//console.log(contents)
+
+export const prerender = false;
+
+---
+<Layout title={'Content of' + ' ' + site.name }>
+    <main class="wrapper">
+    <h1>Contents of {site.name}</h1>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Date</th>
+                <th>Published</th>
+                <th>Actions</th>
+            </tr>
+            {contents.map((item) => (
+                <tr>
+                <td><a href={'/'+(item.Content.alias === '/' ? '' : item.Content.alias)}>{item.Content.title}</a></th>
+                <td><a href={'/admin/user/'+item.Author.id}>{item.Author.name}</a></th>
+                <td>{item.Content.date}</th>
+                <td>{item.Content.published ? 'yes' : 'no'}</th>
+                <td>
+                    <a href={'/admin/content/'+item.Content.id+'/preview'}>Preview</a>
+                    <a href={'/admin/content/'+item.Content.id+'/edit'}>Edit</a>
+                    {item.Content.published ? <a href={'/admin/content/'+item.Content.id+'/unpublish'}>Unpublish</a> : <a href={'/admin/content/'+item.Content.id+'/publish'}>Publish</a>}
+                    <a href={'/admin/content/'+item.Content.id+'/delete'}>Delete</a>
+                </th>
+            </tr>
+            ))}
+        </table>
+    </main>
+</Layout>
+
+<link rel="stylesheet" href="/styles/global.css" />
+<link rel="stylesheet" href="/styles/admin.css" />

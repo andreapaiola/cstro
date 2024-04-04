@@ -1,0 +1,34 @@
+---
+interface Props {
+	body: string;
+}
+
+const { body } = Astro.props;
+---
+
+<div id="host">
+	<template shadowrootmode="open">
+		<button class="toggle-edit-content">Toggle edit content</button>
+		<div id="editor" contenteditable="true" set:html={body}></div>
+		<link rel="stylesheet" href="/styles/global.css" />
+		<link rel="stylesheet" href="/styles/frontend.css" />
+		<style>
+			#editor{
+				background: #fff;
+				border: 1px dotted #000;
+			}
+		</style>
+	</template>
+</div>
+
+<link rel="stylesheet" href="/styles/global.css" />
+
+<script is:inline>
+	const editor = document.getElementById('host').shadowRoot.getElementById('editor');
+	const buttons = Array.from(document.getElementById('host').shadowRoot.querySelectorAll('button.toggle-edit-content'));
+	buttons.forEach((button) => {
+		button.addEventListener('click', async () => {
+			editor.contentEditable = !(editor.isContentEditable)
+		})
+	})
+</script>

@@ -1,0 +1,12 @@
+---
+import { db, Config } from 'astro:db';
+
+const config = await db.select().from(Config);
+const site = config[0];
+//const contents = await db.select().from(Content).where(eq(Content.published, true));
+
+---
+
+<footer>
+    Footer <a href="/">Logo {site.name}</a>
+</footer>
