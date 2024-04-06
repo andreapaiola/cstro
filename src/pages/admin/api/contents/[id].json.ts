@@ -42,7 +42,7 @@ export const PUT: APIRoute = async (ctx) => {
       const request = await ctx.request.json();
       //console.log('body',body)
       //contents = await db.select().from(Content).where(and(eq(Content.published, true),eq(Content.id, id)));
-      console.log('request.data',request.data)
+      //console.log('request.data',request.data)
       contents = await db.update(Content).set({ 
         alias: request.data.alias,
         title: request.data.title,
@@ -58,9 +58,16 @@ export const PUT: APIRoute = async (ctx) => {
 
  
 export const DELETE: APIRoute = async (ctx) => {
-    
-    await db.delete(Content).where(eq(Content.id, ctx.params.id ));
-    return new Response(null, { status: 204 });
+  let contents = {};
+    if( ctx.params.id === undefined ){
+      contents = await db.select().from(Content).where(eq(Content.published, true));
+      return new Response(JSON.stringify(contents));
+    }
+    else{
+      const id: number = ctx.params.id as unknown as number;
+      await db.delete(Content).where(eq(Content.id, id));
+      return new Response(null, { status: 204 });
+    }
   }
 
 
