@@ -42,3 +42,51 @@ export const prerender = false;
 
 <link rel="stylesheet" href="/styles/global.css" />
 <link rel="stylesheet" href="/styles/admin.css" />
+
+<script is:inline>
+
+const publishLink = document.querySelectorAll('a[href$="/publish"]');
+
+publishLink.forEach((link) => {
+  link.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const jsonData = {
+        data: {
+          published: true,
+        }
+      }
+    const id=event.target.getAttribute('href').replace('/admin/content/','').replace('/publish','')
+    const response = await fetch("/admin/api/contents/"+id+".json",
+      {
+        method: 'PUT',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(jsonData)
+      }).then(()=>{
+        window.location.reload(true)
+      });
+  })
+})
+
+const unpublishLink = document.querySelectorAll('a[href$="/unpublish"]');
+unpublishLink.forEach((link) => {
+  link.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const jsonData = {
+        data: {
+          published: false,
+        }
+      }
+    const id=event.target.getAttribute('href').replace('/admin/content/','').replace('/unpublish','')
+    const response = await fetch("/admin/api/contents/"+id+".json",
+      {
+        method: 'PUT',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(jsonData)
+      }).then(()=>{
+        window.location.reload(true)
+      });
+  })
+})
+
+
+</script>

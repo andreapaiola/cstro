@@ -8,24 +8,26 @@ const site = config[0];
 
 export async function getStaticPaths() {
   const contents = await db.select().from(Content);
-  return contents.map(({ id, alias, title, body }) => {
+  return contents.map(({ id, alias, title, body, published }) => {
     return {
       params: { id },
-      props: { alias, title, body, id },
+      props: { alias, title, body, id, published },
     };
   });
 }
 
-const { alias, title, body, id } = Astro.props;
+const { alias, title, body, id, published } = Astro.props;
 
 ---
 <Layout title={'Edit ' + title + ' | ' + site.name }>
-    <div class="wrapper">
+    <div class="wrapper" style="padding: 2rem 0;">
         <a href="/admin/content">Back to admin content</a>
-        <h1>Edit {title} ({id}) <button class="save">Save</button></h1>
+        <h1>Edit {title} ({id}) <input type="checkbox" name="published" id="published" checked={published} /><button class="save">Save</button></h1>
         <label for="title">Title:</label> <input type="text" value={title} id="title">
         <label for="alias">Alias:</label> <input type="text" value={alias} id="alias">
+    </div>
         <Editor body={body} />
+    <div class="wrapper" style="padding: 2rem 0;">
         <button class="save">Save</button>
     </div>
 </Layout>
@@ -44,7 +46,8 @@ const { alias, title, body, id } = Astro.props;
         data: {
           alias: document.getElementById('alias').value,
           title: document.getElementById('title').value,
-          body: document.getElementById('host').shadowRoot.getElementById('editor').innerHTML
+          body: document.getElementById('host').shadowRoot.getElementById('editor').innerHTML,
+          published: document.getElementById('published').value,
         }
       }
       const response = await fetch("/admin/api/contents/"+id+".json",

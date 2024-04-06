@@ -46,7 +46,8 @@ export const PUT: APIRoute = async (ctx) => {
       contents = await db.update(Content).set({ 
         alias: request.data.alias,
         title: request.data.title,
-        body: request.data.body
+        body: request.data.body,
+        published: request.data.published,
        }).where(eq(Content.id, id));
     }
   }
