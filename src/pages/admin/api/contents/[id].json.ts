@@ -101,6 +101,7 @@ export const POST: APIRoute = async (ctx) => {
        }
        
        const newContent: NewContent = { 
+        authorId: request.data.authorId,
         alias: request.data.alias,
         title: request.data.title,
         body: request.data.body,
