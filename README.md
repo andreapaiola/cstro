@@ -1,9 +1,12 @@
 # cstro
 
 CSTRO - an [Astro](https://astro.build/) CMS
+
+
 A CMS for developers.
 
 Do you want to build a static site (and **deploy everywhere**) with the power of a CMS?
+
 
 
 
@@ -28,4 +31,3 @@ In case of
 when build type [in the terminal](https://www.stevefenton.co.uk/blog/2023/07/astro-javascript-heap-out-of-memory/)
 
 `export NODE_OPTIONS=--max_old_space_size=4096`
-
