@@ -353,7 +353,7 @@ export default async function seed() {
 			id: 3,
 			authorId: 2,
 			alias: 'not-public',
-			title: 'Not public',
+			title: 'Not public content example',
 			body: '<h1>Not public body</h1>',
 			published: false,
 		},
