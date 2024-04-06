@@ -28,7 +28,7 @@ export const GET: APIRoute = async (ctx) => {
 
 export const PUT: APIRoute = async (ctx) => {
   //console.log(ctx.params.id)
-  console.log('PUT',ctx)
+  //console.log('PUT',ctx)
   let contents = {};
   if( ctx.params.id === undefined ){
     contents = await db.select().from(Content).where(eq(Content.published, true));
@@ -56,15 +56,15 @@ export const PUT: APIRoute = async (ctx) => {
 }
 
 
-  /*
+ 
 export const DELETE: APIRoute = async (ctx) => {
     
-    //await db.delete(Content).where(eq(Content.id, ctx.params.id ));
+    await db.delete(Content).where(eq(Content.id, ctx.params.id ));
     return new Response(null, { status: 204 });
   }
 
 
-
+ /*
 export const HEAD: APIRoute = async (ctx) => {
     //await db.select(Content).where(eq(Content.id, ctx.params.id ));
     return new Response(null, { status: 204 });

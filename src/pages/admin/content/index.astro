@@ -46,7 +46,6 @@ export const prerender = false;
 <script is:inline>
 
 const publishLink = document.querySelectorAll('a[href$="/publish"]');
-
 publishLink.forEach((link) => {
   link.addEventListener('click', async (event) => {
     event.preventDefault();
@@ -80,6 +79,27 @@ unpublishLink.forEach((link) => {
     const response = await fetch("/admin/api/contents/"+id+".json",
       {
         method: 'PUT',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(jsonData)
+      }).then(()=>{
+        window.location.reload(true)
+      });
+  })
+})
+
+const deleteLink = document.querySelectorAll('a[href$="/delete"]');
+deleteLink.forEach((link) => {
+  link.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const id=event.target.getAttribute('href').replace('/admin/content/','').replace('/delete','')
+    const jsonData = {
+        data: {
+          id: id,
+        }
+      }
+    const response = await fetch("/admin/api/contents/"+id+".json",
+      {
+        method: 'DELETE',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(jsonData)
       }).then(()=>{
