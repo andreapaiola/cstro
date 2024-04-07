@@ -109,7 +109,7 @@ export const POST: APIRoute = async (ctx) => {
         published: request.data.published,
        };
       contents = await insertContent(newContent).then((content)=>{
-        console.log('content[0]: ',content[0])
+        //console.log('content[0]: ',content[0])
         return content[0];
       });
        

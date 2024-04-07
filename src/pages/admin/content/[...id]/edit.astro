@@ -22,7 +22,7 @@ const { alias, title, body, id, published } = Astro.props;
 <Layout title={'Edit ' + title + ' | ' + site.name }>
     <div class="wrapper" style="padding: 2rem 0;">
         <a href="/admin/content">Back to Admin Content</a>
-        <h1>Edit {title} ({id}) 
+        <h1>Edit {title} (id: {id}) 
           <button class="save">Save</button>
         </h1>
         <label for="published">Published: </label>{published ? <input type="checkbox" name="published" id="published" checked /> : <input type="checkbox" name="published" id="published" />}
