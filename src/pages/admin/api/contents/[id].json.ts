@@ -96,8 +96,9 @@ export const POST: APIRoute = async (ctx) => {
        */
        type NewContent = typeof Content.$inferInsert;
 
-       const insertContent = async (user: NewContent) => {
-         return db.insert(Content).values(user);
+       const insertContent = async (content: NewContent) => {
+        //console.log(db.insert(Content).values(content).returning())
+         return db.insert(Content).values(content).returning();
        }
        
        const newContent: NewContent = { 
@@ -107,12 +108,16 @@ export const POST: APIRoute = async (ctx) => {
         body: request.data.body,
         published: request.data.published,
        };
-       await insertContent(newContent);
+      contents = await insertContent(newContent).then((content)=>{
+        console.log('content[0]: ',content[0])
+        return content[0];
+      });
        
     }
   }
   else{
     contents = await db.select().from(Content).where(eq(Content.published, true));
+    return new Response(JSON.stringify(contents));
   }
   //console.log('content',content)
   return new Response(JSON.stringify(contents));

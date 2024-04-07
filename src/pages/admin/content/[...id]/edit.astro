@@ -39,9 +39,7 @@ const { alias, title, body, id, published } = Astro.props;
 <script is:inline define:vars={{ id }}>
   
   //console.log(id)
-
   const buttons = document.querySelectorAll('button.save');
-
   buttons.forEach((button) => {
     button.addEventListener('click', async () => {
       //console.log('save',window.editor.getData())
@@ -61,11 +59,9 @@ const { alias, title, body, id, published } = Astro.props;
       }).then(()=>{
         window.location.reload(true)
       });
-
-    
     //console.log('json response',response);
-
     });
   });
+
 
 </script>

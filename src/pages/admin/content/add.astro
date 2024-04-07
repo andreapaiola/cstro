@@ -56,11 +56,26 @@ addButtons.forEach((button) => {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify(jsonData)
-    }).then(()=>{
-      window.location.reload(true)
-    });
-  //console.log('json response',response);
+    }).then(response => {
 
-  });
+    response.json().then(body => {
+      console.log('body: ',body)
+        if (response.status === 200) {
+          console.log(body)
+          window.location.replace('/admin/content/'+body.id+'/edit')
+        } else {
+            throw body
+        }
+    })
+})
+
+  })
+})
+    
+
+const alias = document.getElementById('alias')
+document.getElementById('title').addEventListener('input', function (event) {
+  console.log(event.target.value)
+  alias.value = event.target.value.replaceAll(' ','-').replaceAll('--','-').toLocaleLowerCase()
 });
 </script>
