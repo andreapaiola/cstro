@@ -122,37 +122,3 @@ export const POST: APIRoute = async (ctx) => {
   //console.log('content',content)
   return new Response(JSON.stringify(contents));
 }
-
-
-
-
- /*
-export const HEAD: APIRoute = async (ctx) => {
-    //await db.select(Content).where(eq(Content.id, ctx.params.id ));
-    return new Response(null, { status: 204 });
-  }
-  
-export const PUT: APIRoute = async (ctx) => {
-    
-    const updatedContentId: { updatedId: number }[] = await db.update(Content)
-        .set(ctx.body)
-        .where(eq(Content.id, ctx.params.id ))
-        .returning({ updatedId: Content.id });
-    return new Response(updatedContentId, { status: 204 });
-    
-    return new Response(null, { status: 204 });
-  }
-
-  export const POST: APIRoute = async (ctx) => {
-    
-    const newContentId: { newId: number }[] = await db.update(Content)
-        .set(ctx.body)
-        .returning({ newId: Content.id });
-    return new Response(newContentId, { status: 204 });
-    
-    return new Response(null, { status: 204 });
-
-  }
-
-  */
-  

@@ -1,4 +1,4 @@
-import { db, Config, Author, Content } from 'astro:db';
+import { db, Config, Author, Content, HtmlTemplate } from 'astro:db';
 
 // https://astro.build/db/seed
 export default async function seed() {
@@ -26,7 +26,7 @@ export default async function seed() {
 			HTML playground
 		</h2>
 		<div class="wrapper">
-  <div class="with-sidebar">
+  <div class="with-sidebar" style="--main-min-width: 40ch;--sidebar-size: 30ch;">
     <main>
       <h1>First title</h1>
       <h2>Second title</h2>
@@ -374,6 +374,74 @@ export default async function seed() {
 			name: 'Site',
 			email: 'info@site.com',
 		}
+	])
+
+  await db.insert(HtmlTemplate).values([
+		{
+			id: 1,
+			name: 'Wrapper',
+			content: '<div class="wrapper">Content of the wrapper</div>',
+		},
+    {
+			id: 2,
+			name: 'With sidebar',
+			content: `
+        <div class="with-sidebar">
+          <main>
+            <p>A short text in the main wrapper</p>
+          </main>
+          <aside>
+            <p>A sidebar</p>
+          </aside>
+        </div>
+      `,
+		},
+    {
+			id: 3,
+			name: 'Columns',
+			content: `
+      <div class="columns">
+      <div>
+        <p>Text column 1</p>
+      </div>
+      <div>
+        <p>Text</p>
+      </div>
+      <div>
+        <p>Text</p>
+      </div>
+    </div>
+      `,
+		},
+    {
+			id: 4,
+			name: 'Content flow (grid)',
+			content: `
+      <div class="content-grid">
+      <p>Content flow Text</p>
+    </div>
+      `,
+		},
+    {
+			id: 5,
+			name: 'Breakout from the flow',
+			content: `
+      <div class="breakout">
+      <p>Content breakout Text</p>
+    </div>
+      `,
+		},
+    {
+			id: 6,
+			name: 'Full width from the flow',
+			content: `
+      <div class="full-width">
+      <p>Content full width 100% Text</p>
+    </div>
+      `,
+		},
+
+    
 	])
 	
 }

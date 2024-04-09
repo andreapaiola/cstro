@@ -3,19 +3,56 @@ interface Props {
 	body: string;
 }
 
+import { db, HtmlTemplate } from 'astro:db';
+const HtmlTemplates = await db.select().from(HtmlTemplate);
+
 const { body } = Astro.props;
 ---
 
 <div id="host">
 	<template shadowrootmode="open">
 		<button class="toggle-edit-content">Toggle edit content</button>
+
+		<select id="html-templates">
+			<option>-- select a template --</option>
+			{HtmlTemplates.map((item) => (
+				<option value={item.content}>{item.name}</option>
+			  ))}
+		</select>
+		<button class="insert-html">Insert HTML template</button>
+
 		<div id="editor" contenteditable="true" set:html={body}></div>
 		<link rel="stylesheet" href="/styles/global.css" />
 		<link rel="stylesheet" href="/styles/frontend.css" />
 		<style>
 			#editor{
 				background: #fff;
-				border: 1px dotted #000;
+				border: 2px solid #000;
+				position: relative;
+			}
+			#editor::before{
+				content: 'Edit content off';
+				display: block;
+				width: max-content;
+				opacity: .2;
+				border: 2px solid orange;
+				background: orange;
+				color: #000;
+				position: sticky;
+				z-index: 999;
+				right: 0;
+				top: 0;
+				padding: .2em .5em;
+			}
+			#editor[contenteditable="true"]{
+				border: 2px solid orange;
+				overflow: auto;
+				max-width: 100%;
+				max-height: calc(100svh - 20rem);
+			}
+			#editor[contenteditable="true"]::before{
+				content: 'Edit content on';
+				opacity: .8;
 			}
 		</style>
 	</template>
@@ -24,11 +61,50 @@ const { body } = Astro.props;
 <link rel="stylesheet" href="/styles/global.css" />
 
 <script is:inline>
-	const editor = document.getElementById('host').shadowRoot.getElementById('editor');
-	const buttons = Array.from(document.getElementById('host').shadowRoot.querySelectorAll('button.toggle-edit-content'));
-	buttons.forEach((button) => {
+	const shadowRoot = document.getElementById('host').shadowRoot;
+	const editor = shadowRoot.getElementById('editor');
+	const buttonsToggle = Array.from(shadowRoot.querySelectorAll('button.toggle-edit-content'));
+	buttonsToggle.forEach((button) => {
 		button.addEventListener('click', async () => {
 			editor.contentEditable = !(editor.isContentEditable)
+		})
+	})
+
+	const buttonsInsert = Array.from(shadowRoot.querySelectorAll('button.insert-html'));
+	const htmlTemplates = shadowRoot.getElementById('html-templates');
+	buttonsInsert.forEach((button) => {
+		button.addEventListener('mousedown', async (event) => {
+			event.preventDefault()
+
+			let sel, range, html;
+
+			html = htmlTemplates.value;
+
+			if (shadowRoot.getSelection) {
+				
+				sel = shadowRoot.getSelection();
+				if (sel.getRangeAt && sel.rangeCount) {
+					range = sel.getRangeAt(0);
+					range.deleteContents();
+					let el = document.createElement("div");
+					el.innerHTML = html;
+					let frag = document.createDocumentFragment(), node, lastNode;
+					while ( (node = el.firstChild) ) {
+						lastNode = frag.appendChild(node);
+					}
+					range.insertNode(frag);
+					
+					// Preserve the selection
+					if (lastNode) {
+						range = range.cloneRange();
+						range.setStartAfter(lastNode);
+						range.collapse(true);
+						sel.removeAllRanges();
+						sel.addRange(range);
+					}
+				}
+			}
+
 		})
 	})
 </script>

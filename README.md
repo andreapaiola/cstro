@@ -2,21 +2,24 @@
 
 CSTRO - an [Astro](https://astro.build/) CMS
 
-
 A CMS for developers.
 
 Do you want to build a static site (and **deploy everywhere**) with the power of a CMS?
-
-
-
 
 **Local development** with [Astro DB](https://astro.build/db/).
 
 `npm run dev`
 
+or
+
+`npx astro dev`
+
 Build and deploy
 
 `npm run build`
+
+or
+
 
 DB structure: [db/config.ts](db/config.ts)
 

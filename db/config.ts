@@ -31,7 +31,15 @@ const Content = defineTable({
   }
 })
 
+const HtmlTemplate = defineTable({
+  columns: {
+    id: column.number({ primaryKey: true }),
+    name: column.text(),
+    content: column.text(),
+  }
+})
+
 // https://astro.build/db/config
 export default defineDb({
-  tables: { Config, Author, Content }
+  tables: { Config, Author, Content, HtmlTemplate }
 });

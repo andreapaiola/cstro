@@ -37,7 +37,6 @@ const { alias, title, body, id, published } = Astro.props;
 <link rel="stylesheet" href="/styles/global.css" />
 <link rel="stylesheet" href="/styles/admin.css" />
 <script is:inline define:vars={{ id }}>
-  
   //console.log(id)
   const buttons = document.querySelectorAll('button.save');
   buttons.forEach((button) => {
