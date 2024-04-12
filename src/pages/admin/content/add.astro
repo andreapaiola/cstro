@@ -1,7 +1,7 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import Editor from '../../../components/Editor.astro';
-import { db, eq, Config, Author, Content } from 'astro:db';
+import { db, eq, Config, Author } from 'astro:db';
 
 const config = await db.select().from(Config);
 const site = config[0];
@@ -57,25 +57,51 @@ addButtons.forEach((button) => {
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify(jsonData)
     }).then(response => {
-
-    response.json().then(body => {
-      console.log('body: ',body)
-        if (response.status === 200) {
-          //console.log(body)
-          window.location.replace('/admin/content/'+body.id+'/edit')
-        } else {
-            throw body
-        }
+        response.json().then(body => {
+          console.log('body: ',body)
+            if (response.status === 200) {
+              //console.log(body)
+              window.location.replace('/admin/content/'+body.id+'/edit')
+            } else {
+                throw body
+            }
+        })
     })
-})
-
   })
 })
     
 
 const alias = document.getElementById('alias')
-document.getElementById('title').addEventListener('input', function (event) {
+document.getElementById('title').addEventListener('input', async function (event) {
   console.log(event.target.value)
   alias.value = event.target.value.replaceAll(' ','-').replaceAll('--','-').toLocaleLowerCase()
+
+  const jsonData = {
+        data: {
+          alias: document.getElementById('alias').value,
+          
+        }
+      }
+    const response = await fetch("/admin/api/contents/test.json",
+      {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(jsonData)
+      }).then(response => {
+        response.json().then(body => {
+          console.log('body: ',body)
+            if (response.status === 200) {
+              //console.log(body)
+              if(body[0]){
+                alert('alias')
+              }
+            } else {
+                throw body
+            }
+        })
 });
+
+});
+
+
 </script>

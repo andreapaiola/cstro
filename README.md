@@ -34,3 +34,11 @@ In case of
 when build type [in the terminal](https://www.stevefenton.co.uk/blog/2023/07/astro-javascript-heap-out-of-memory/)
 
 `export NODE_OPTIONS=--max_old_space_size=4096`
+
+
+TODO:
+- check for duplicate alias
+- Add common HTML templates (patterns)
+- HTML template admin in admin/html/[id]
+- users admin in admin/user/[id]
+- import/export DB in in admin/

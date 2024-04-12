@@ -440,8 +440,15 @@ export default async function seed() {
     </div>
       `,
 		},
+    {
+			id: 7,
+			name: 'Responsive image',
+			content: `<picture class="responsive-image">
+            <source media="(min-width: 85.375rem)" srcset="https://picsum.photos/400/600">
+            <img loading="lazy" class="block-hero-home-doit-item-image" src="https://picsum.photos/200/300" alt="Image alt text">
+          </picture>`,
+        },
 
-    
 	])
 	
 }

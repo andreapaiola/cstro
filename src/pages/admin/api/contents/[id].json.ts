@@ -15,8 +15,14 @@ export async function getStaticPaths() {
 export const GET: APIRoute = async (ctx) => {
   //console.log(ctx.params.id)
   let contents = {};
+  const request = await ctx.request.json();
   if( ctx.params.id === undefined ){
-    contents = await db.select().from(Content).where(eq(Content.published, true));
+    if( request.data.alias && request.data.alias != '' ){
+      contents = await db.select().from(Content).where(eq(Content.alias, request.data.alias));
+    }
+    else{
+      contents = await db.select().from(Content).where(eq(Content.published, true));
+    }
   }
   else{
     const id: number = ctx.params.id as unknown as number;
@@ -35,6 +41,7 @@ export const PUT: APIRoute = async (ctx) => {
     contents = await db.select().from(Content).where(eq(Content.published, true));
   }
   else{
+
     if( ctx.request.body === undefined || ctx.request.body === null ) {
       throw new Error('No body')
     }
@@ -116,7 +123,13 @@ export const POST: APIRoute = async (ctx) => {
     }
   }
   else{
-    contents = await db.select().from(Content).where(eq(Content.published, true));
+    if( ctx.params.id === 'test' ){
+      const request = await ctx.request.json();
+      contents = await db.select().from(Content).where(eq(Content.alias, request.data.alias));
+    }
+    else{
+      contents = await db.select().from(Content).where(eq(Content.published, true));
+    }
     return new Response(JSON.stringify(contents));
   }
   //console.log('content',content)

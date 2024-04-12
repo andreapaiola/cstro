@@ -8,3 +8,18 @@ html,body{
     --font-size-big: 18;
     --font-size-small: 14;
 }
+
+table{
+    font-size: .8em;
+    width: 100%;
+}
+
+tr{
+    border: 1px solid #000;
+}
+
+th,td{
+    background: #fff;
+    padding: .1em .5em;
+}
+
