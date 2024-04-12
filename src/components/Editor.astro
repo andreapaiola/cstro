@@ -45,6 +45,9 @@ const { body } = Astro.props;
 				padding: .2em .5em;
 				pointer-events: none;
 			}
+			#editor::before *{
+				pointer-events: none;
+			}
 			#editor[contenteditable="true"]{
 				border: 2px solid orange;
 				overflow: auto;
