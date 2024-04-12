@@ -23,3 +23,17 @@ th,td{
     padding: .1em .5em;
 }
 
+input.input-error{
+    border: 1px solid red;
+}
+
+.inputs{
+    display: flex;
+    flex-wrapper: wrap;
+    gap: 1rem;
+}
+.message-error{
+    color: red;
+    font-size: .8em;
+    background: #fff;
+}

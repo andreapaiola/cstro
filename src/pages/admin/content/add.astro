@@ -17,15 +17,25 @@ export const prerender = false;
       <h1>Add Content to {site.name}
         <button class="save">Save</button>
       </h1>
-      <label for="published">Published: </label><input type="checkbox" name="published" id="published" checked />
-        <label for="title">Title:</label> <input type="text" value="" id="title">
-        <label for="alias">Alias:</label> <input type="text" value="" id="alias">
-        <label for="author">Author:</label>
-        <select name="author" id="author">
-          {authors.map((item) => (
-            <option value={item.id}>{item.name}</option>
-          ))}
-        </select>
+      <div class="inputs">
+        <div class="input-item">
+          <label for="published">Published: </label><input type="checkbox" name="published" id="published" checked />
+        </div>
+        <div class="input-item">
+          <label for="title">Title:</label> <input type="text" value="" id="title">
+        </div>
+        <div class="input-item">
+          <label for="alias">Alias:</label> <input type="text" value="" id="alias">
+        </div>
+        <div class="input-item">
+          <label for="author">Author:</label>
+          <select name="author" id="author">
+            {authors.map((item) => (
+              <option value={item.id}>{item.name}</option>
+            ))}
+          </select>
+        </div>
+      </div>
     </div>
     <Editor body="" />
     <div class="wrapper" style="padding: 2rem 0;">
@@ -69,17 +79,18 @@ addButtons.forEach((button) => {
     })
   })
 })
-    
+
+document.getElementById('title').addEventListener('input', async function (event) {
+  //console.log(event.target.value)
+  alias.value = event.target.value.replaceAll(' ','-').replaceAll('--','-').toLocaleLowerCase()
+  alias.dispatchEvent(new Event('input'));
+});
 
 const alias = document.getElementById('alias')
-document.getElementById('title').addEventListener('input', async function (event) {
-  console.log(event.target.value)
-  alias.value = event.target.value.replaceAll(' ','-').replaceAll('--','-').toLocaleLowerCase()
-
+alias.addEventListener('input', async function (event) {
   const jsonData = {
         data: {
-          alias: document.getElementById('alias').value,
-          
+          alias: alias.value,
         }
       }
     const response = await fetch("/admin/api/contents/test.json",
@@ -93,15 +104,25 @@ document.getElementById('title').addEventListener('input', async function (event
             if (response.status === 200) {
               //console.log(body)
               if(body[0]){
-                alert('alias')
+                alias.classList.add('input-error')
+                let message = document.createElement('p')
+                message.classList.add('message-error')
+                message.append('Duplicate alias, please change it')
+                alias.parentElement.append(message)
+              }
+              else{
+                alias.classList.remove('input-error')
+                Array.from(alias.parentElement.getElementsByClassName('message-error')).forEach(function(element,index){
+                  console.log('element',element)
+                  element.remove()
+                })
               }
             } else {
                 throw body
             }
         })
-});
-
-});
+  });
+})
 
 
 </script>

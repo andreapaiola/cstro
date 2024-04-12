@@ -42,3 +42,4 @@ TODO:
 - HTML template admin in admin/html/[id]
 - users admin in admin/user/[id]
 - import/export DB in in admin/
+- automatic CSS reload/update
