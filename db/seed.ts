@@ -447,7 +447,53 @@ export default async function seed() {
             <source media="(min-width: 85.375rem)" srcset="https://picsum.photos/400/600">
             <img loading="lazy" class="block-hero-home-doit-item-image" src="https://picsum.photos/200/300" alt="Image alt text">
           </picture>`,
-        },
+    },
+    {
+			id: 8,
+			name: 'Table',
+			content: `<table>
+      <caption>
+        Front-end web developer course 2021
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Person</th>
+          <th scope="col">Most interest in</th>
+          <th scope="col">Age</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Chris</th>
+          <td>HTML tables</td>
+          <td>22</td>
+        </tr>
+        <tr>
+          <th scope="row">Dennis</th>
+          <td>Web accessibility</td>
+          <td>45</td>
+        </tr>
+        <tr>
+          <th scope="row">Sarah</th>
+          <td>JavaScript frameworks</td>
+          <td>29</td>
+        </tr>
+        <tr>
+          <th scope="row">Karen</th>
+          <td>Web performance</td>
+          <td>36</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th scope="row" colspan="2">Average age</th>
+          <td>33</td>
+        </tr>
+      </tfoot>
+    </table>
+    `,
+    },
+      
 
 	])
 	
