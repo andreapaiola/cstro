@@ -36,11 +36,11 @@ when build type [in the terminal](https://www.stevefenton.co.uk/blog/2023/07/ast
 `export NODE_OPTIONS=--max_old_space_size=4096`
 
 
-##TODO:
+## TODO:
 - [ ] fix build
 - [x] check for duplicate alias
 - [x] Add common HTML templates (patterns)
-- [ ]HTML template admin in admin/html/[id]
-- [ ]users admin in admin/user/[id]
-- [ ]import/export DB in in admin/
-- [ ]automatic CSS reload/update
+- [ ] HTML template admin in admin/html/[id]
+- [ ] users admin in admin/user/[id]
+- [ ] import/export DB in in admin/
+- [ ] automatic CSS reload/update
