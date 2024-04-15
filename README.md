@@ -37,6 +37,7 @@ when build type [in the terminal](https://www.stevefenton.co.uk/blog/2023/07/ast
 
 
 TODO:
+- fix build
 - check for duplicate alias
 - Add common HTML templates (patterns)
 - HTML template admin in admin/html/[id]
