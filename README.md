@@ -37,9 +37,9 @@ when build type [in the terminal](https://www.stevefenton.co.uk/blog/2023/07/ast
 
 
 TODO:
-- fix build
-- check for duplicate alias
-- Add common HTML templates (patterns)
+[] fix build
+[x] check for duplicate alias
+[x] Add common HTML templates (patterns)
 - HTML template admin in admin/html/[id]
 - users admin in admin/user/[id]
 - import/export DB in in admin/
