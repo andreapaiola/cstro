@@ -56,7 +56,7 @@ publishLink.forEach((link) => {
         }
       }
     const id=event.target.getAttribute('href').replace('/admin/content/','').replace('/publish','')
-    const response = await fetch("/admin/api/contents/"+id+".json",
+    await fetch("/admin/api/contents/"+id+".json",
       {
         method: 'PUT',
         headers: {'Content-Type':'application/json'},
@@ -77,7 +77,7 @@ unpublishLink.forEach((link) => {
         }
       }
     const id=event.target.getAttribute('href').replace('/admin/content/','').replace('/unpublish','')
-    const response = await fetch("/admin/api/contents/"+id+".json",
+    await fetch("/admin/api/contents/"+id+".json",
       {
         method: 'PUT',
         headers: {'Content-Type':'application/json'},
@@ -98,7 +98,7 @@ deleteLink.forEach((link) => {
           id: id,
         }
       }
-    const response = await fetch("/admin/api/contents/"+id+".json",
+    await fetch("/admin/api/contents/"+id+".json",
       {
         method: 'DELETE',
         headers: {'Content-Type':'application/json'},

@@ -50,7 +50,7 @@ const { alias, title, body, id, published } = Astro.props;
           published: document.getElementById('published').checked,
         }
       }
-      const response = await fetch("/admin/api/contents/"+id+".json",
+      await fetch("/admin/api/contents/"+id+".json",
       {
         method: 'PUT',
         headers: {'Content-Type':'application/json'},

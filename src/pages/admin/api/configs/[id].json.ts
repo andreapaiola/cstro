@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { db, Config, eq, and } from 'astro:db';
+import { db, Config, eq } from 'astro:db';
 
 export const prerender = false;
 

@@ -1,7 +1,7 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import Editor from '../../../components/Editor.astro';
-import { db, eq, Config, Author } from 'astro:db';
+import { db, Config, Author } from 'astro:db';
 
 const config = await db.select().from(Config);
 const site = config[0];
@@ -61,7 +61,7 @@ addButtons.forEach((button) => {
         published: document.getElementById('published').checked,
       }
     }
-    const response = await fetch("/admin/api/contents/add.json",
+    await fetch("/admin/api/contents/add.json",
     {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
@@ -87,13 +87,13 @@ document.getElementById('title').addEventListener('input', async function (event
 });
 
 const alias = document.getElementById('alias')
-alias.addEventListener('input', async function (event) {
+alias.addEventListener('input', async function () {
   const jsonData = {
         data: {
           alias: alias.value,
         }
       }
-    const response = await fetch("/admin/api/contents/test.json",
+    await fetch("/admin/api/contents/test.json",
       {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
@@ -112,8 +112,8 @@ alias.addEventListener('input', async function (event) {
               }
               else{
                 alias.classList.remove('input-error')
-                Array.from(alias.parentElement.getElementsByClassName('message-error')).forEach(function(element,index){
-                  console.log('element',element)
+                Array.from(alias.parentElement.getElementsByClassName('message-error')).forEach(function(element){
+                  //console.log('element',element)
                   element.remove()
                 })
               }

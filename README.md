@@ -1,6 +1,6 @@
 # cstro
 
-CSTRO - an [Astro](https://astro.build/) CMS
+# CSTRO - an [Astro](https://astro.build/) CMS
 
 A CMS for developers.
 
