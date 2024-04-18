@@ -54,7 +54,7 @@ p{
     text-wrap: pretty;
 }
 
-@media (prefers-reduced-motion: no-preferece){
+@media (prefers-reduced-motion: no-preference){
     :has(:target){
         scroll-behaviour: smooth;
         scroll-padding-top: 2rem;
