@@ -56,7 +56,7 @@ p{
 
 @media (prefers-reduced-motion: no-preference){
     :has(:target){
-        scroll-behaviour: smooth;
+        scroll-behavior: smooth;
         scroll-padding-top: 2rem;
     }
 }
